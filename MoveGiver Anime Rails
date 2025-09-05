@@ -1,0 +1,180 @@
+
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+
+
+local moveGiver = Instance.new("Tool")
+moveGiver.Name = "MoveGiver"
+moveGiver.RequiresHandle = false
+moveGiver.CanBeDropped = false
+moveGiver.Parent = player.Backpack
+
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MoveGiverGui"
+screenGui.ResetOnSpawn = false
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 220, 0, 190)
+mainFrame.Position = UDim2.new(1, -230, 0, 50) -- top right
+mainFrame.BackgroundColor3 = Color3.new(0, 0, 0) -- black
+mainFrame.BackgroundTransparency = 0.2
+mainFrame.Visible = false
+mainFrame.Parent = screenGui
+
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 20)
+corner.Parent = mainFrame
+
+
+local domainWarning = Instance.new("TextLabel")
+domainWarning.Size = UDim2.new(1, 0, 0, 30)
+domainWarning.Position = UDim2.new(0, 0, 0, -58) -- above credit
+domainWarning.BackgroundTransparency = 1
+domainWarning.Text = "Warning: Sukuna's Domain is the only one supported for now"
+domainWarning.TextColor3 = Color3.new(1, 0, 0)
+domainWarning.Font = Enum.Font.SourceSansBold
+domainWarning.TextScaled = true
+domainWarning.TextWrapped = true
+domainWarning.Parent = mainFrame
+
+
+local credit = Instance.new("TextLabel")
+credit.Size = UDim2.new(1, 0, 0, 20)
+credit.Position = UDim2.new(0, 0, 0, -28) -- just under the domain warning
+credit.BackgroundTransparency = 1
+credit.Text = "LuciousQuill"
+credit.TextColor3 = Color3.fromRGB(255, 215, 0) -- gold
+credit.Font = Enum.Font.SourceSansBold
+credit.TextScaled = true
+credit.Parent = mainFrame
+
+
+local nameWarning = Instance.new("TextLabel")
+nameWarning.Size = UDim2.new(1, -10, 0, 40)
+nameWarning.Position = UDim2.new(0, 5, 0, 5)
+nameWarning.BackgroundTransparency = 1
+nameWarning.Text = "Warning: Skill names must match exactly.\nUse correct uppercase/lowercase, and no spaces."
+nameWarning.TextColor3 = Color3.new(1, 0, 0)
+nameWarning.Font = Enum.Font.SourceSansBold
+nameWarning.TextScaled = true
+nameWarning.TextWrapped = true
+nameWarning.Parent = mainFrame
+
+
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(0.9, 0, 0, 30)
+textBox.Position = UDim2.new(0.05, 0, 0.35, 0)
+textBox.BackgroundColor3 = Color3.new(1, 1, 1)
+textBox.TextColor3 = Color3.new(0, 0, 0)
+textBox.PlaceholderText = "Enter Move"
+textBox.Font = Enum.Font.SourceSansBold
+textBox.TextScaled = true
+textBox.Parent = mainFrame
+
+local textCorner = Instance.new("UICorner")
+textCorner.CornerRadius = UDim.new(0, 10)
+textCorner.Parent = textBox
+
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0.9, 0, 0, 30)
+button.Position = UDim2.new(0.05, 0, 0.6, 0)
+button.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+button.Text = "Get Move"
+button.TextColor3 = Color3.new(1, 1, 1)
+button.Font = Enum.Font.SourceSansBold
+button.TextScaled = true
+button.Parent = mainFrame
+
+local btnCorner = Instance.new("UICorner")
+btnCorner.CornerRadius = UDim.new(0, 10)
+btnCorner.Parent = button
+
+
+local warning = Instance.new("TextLabel")
+warning.Size = UDim2.new(1, 0, 0, 40)
+warning.Position = UDim2.new(0, 0, 1, 5)
+warning.BackgroundTransparency = 1
+warning.Text = "Warning:\nDon't type in skill names that don't exist,\nit will just make your inventory messy"
+warning.TextColor3 = Color3.new(1, 0, 0)
+warning.Font = Enum.Font.SourceSansBold
+warning.TextScaled = true
+warning.TextWrapped = true
+warning.Parent = mainFrame
+
+
+button.MouseButton1Click:Connect(function()
+	local skillName = textBox.Text
+	if skillName == "" then return end
+
+	
+	if player.Backpack:FindFirstChild(skillName) or player.Character:FindFirstChild(skillName) then
+		textBox.TextColor3 = Color3.new(1, 0, 0)
+		textBox.Text = "You already have " .. skillName
+		return
+	end
+
+	
+	if skillName == "DismantleDomain" then
+		local domainTool = Instance.new("Tool")
+		domainTool.Name = "DismantleDomain"
+		domainTool.RequiresHandle = false
+		domainTool.CanBeDropped = false
+		domainTool.Parent = player.Backpack
+
+		domainTool.Activated:Connect(function()
+			local args = {
+				{ Key = "SukunaDomain", Function = "Active" }
+			}
+			ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ServerRemote"):FireServer(unpack(args))
+		end)
+
+		textBox.TextColor3 = Color3.new(0, 0, 0)
+		textBox.Text = "Sukuna's Domain Added"
+		return
+	end
+
+	
+	if string.find(skillName, "Domain") then
+		textBox.TextColor3 = Color3.new(1, 0, 0)
+		textBox.Text = "Only Sukuna's Domain works!"
+		return
+	end
+
+	
+	local skillEvent = ReplicatedStorage:WaitForChild("Events"):FindFirstChild("Skill")
+	if skillEvent then
+		local skillTool = Instance.new("Tool")
+		skillTool.Name = skillName
+		skillTool.RequiresHandle = false
+		skillTool.CanBeDropped = false
+		skillTool.Parent = player.Backpack
+
+		skillTool.Activated:Connect(function()
+			local args = {"Fist", skillName}
+			skillEvent:FireServer(unpack(args))
+		end)
+
+		textBox.TextColor3 = Color3.new(0, 0, 0)
+		textBox.Text = skillName .. " added!"
+	else
+		textBox.TextColor3 = Color3.new(1, 0, 0)
+		textBox.Text = "Move doesn't exist"
+	end
+end)
+
+
+moveGiver.Equipped:Connect(function()
+	screenGui.Parent = player:WaitForChild("PlayerGui")
+	mainFrame.Visible = true
+end)
+
+
+moveGiver.Unequipped:Connect(function()
+	mainFrame.Visible = false
+end)
