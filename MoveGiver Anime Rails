@@ -1,8 +1,5 @@
-
-
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local player = Players.LocalPlayer
 
 
@@ -17,164 +14,460 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "MoveGiverGui"
 screenGui.ResetOnSpawn = false
 
+
 local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 220, 0, 190)
-mainFrame.Position = UDim2.new(1, -230, 0, 50) -- top right
-mainFrame.BackgroundColor3 = Color3.new(0, 0, 0) -- black
+mainFrame.Size = UDim2.new(0, 220, 0, 300)
+mainFrame.Position = UDim2.new(1, -230, 0, 50)
+mainFrame.BackgroundColor3 = Color3.new(0,0,0)
 mainFrame.BackgroundTransparency = 0.2
 mainFrame.Visible = false
 mainFrame.Parent = screenGui
-
 
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 20)
 corner.Parent = mainFrame
 
 
+local creditLabel = Instance.new("TextLabel")
+creditLabel.Size = UDim2.new(1, -10, 0, 22)
+creditLabel.Position = UDim2.new(0,5,0,2)
+creditLabel.BackgroundTransparency = 1
+creditLabel.Text = "LuciousQuill"
+creditLabel.Font = Enum.Font.SourceSansBold
+creditLabel.TextScaled = true
+creditLabel.TextColor3 = Color3.fromRGB(255,215,0)
+creditLabel.Parent = mainFrame
+
+
 local domainWarning = Instance.new("TextLabel")
-domainWarning.Size = UDim2.new(1, 0, 0, 30)
-domainWarning.Position = UDim2.new(0, 0, 0, -58) -- above credit
+domainWarning.Size = UDim2.new(1, -10, 0, 18)
+domainWarning.Position = UDim2.new(0,5,0,24)
 domainWarning.BackgroundTransparency = 1
-domainWarning.Text = "Warning: Sukuna's Domain is the only one supported for now"
-domainWarning.TextColor3 = Color3.new(1, 0, 0)
+domainWarning.Text = "Domains Don't Work"
 domainWarning.Font = Enum.Font.SourceSansBold
 domainWarning.TextScaled = true
-domainWarning.TextWrapped = true
+domainWarning.TextColor3 = Color3.fromRGB(255,170,0)
 domainWarning.Parent = mainFrame
 
-
-local credit = Instance.new("TextLabel")
-credit.Size = UDim2.new(1, 0, 0, 20)
-credit.Position = UDim2.new(0, 0, 0, -28) -- just under the domain warning
-credit.BackgroundTransparency = 1
-credit.Text = "LuciousQuill"
-credit.TextColor3 = Color3.fromRGB(255, 215, 0) -- gold
-credit.Font = Enum.Font.SourceSansBold
-credit.TextScaled = true
-credit.Parent = mainFrame
-
-
+-- Name Warning
 local nameWarning = Instance.new("TextLabel")
 nameWarning.Size = UDim2.new(1, -10, 0, 40)
-nameWarning.Position = UDim2.new(0, 5, 0, 5)
+nameWarning.Position = UDim2.new(0,5,0,45)
 nameWarning.BackgroundTransparency = 1
-nameWarning.Text = "Warning: Skill names must match exactly.\nUse correct uppercase/lowercase, and no spaces."
-nameWarning.TextColor3 = Color3.new(1, 0, 0)
+nameWarning.Text = "Skill names must match exactly."
+nameWarning.TextColor3 = Color3.new(1,0,0)
 nameWarning.Font = Enum.Font.SourceSansBold
 nameWarning.TextScaled = true
 nameWarning.TextWrapped = true
 nameWarning.Parent = mainFrame
 
-
+-- Move TextBox
 local textBox = Instance.new("TextBox")
-textBox.Size = UDim2.new(0.9, 0, 0, 30)
-textBox.Position = UDim2.new(0.05, 0, 0.35, 0)
-textBox.BackgroundColor3 = Color3.new(1, 1, 1)
-textBox.TextColor3 = Color3.new(0, 0, 0)
+textBox.Size = UDim2.new(0.9,0,0,30)
+textBox.Position = UDim2.new(0.05,0,0,95)
+textBox.BackgroundColor3 = Color3.new(1,1,1)
+textBox.TextColor3 = Color3.new(0,0,0)
 textBox.PlaceholderText = "Enter Move"
 textBox.Font = Enum.Font.SourceSansBold
 textBox.TextScaled = true
 textBox.Parent = mainFrame
 
 local textCorner = Instance.new("UICorner")
-textCorner.CornerRadius = UDim.new(0, 10)
+textCorner.CornerRadius = UDim.new(0,10)
 textCorner.Parent = textBox
 
 
-local button = Instance.new("TextButton")
-button.Size = UDim2.new(0.9, 0, 0, 30)
-button.Position = UDim2.new(0.05, 0, 0.6, 0)
-button.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-button.Text = "Get Move"
-button.TextColor3 = Color3.new(1, 1, 1)
-button.Font = Enum.Font.SourceSansBold
-button.TextScaled = true
-button.Parent = mainFrame
+local giveButton = Instance.new("TextButton")
+giveButton.Size = UDim2.new(0.6,0,0,30)
+giveButton.Position = UDim2.new(0.05,0,0,135)
+giveButton.BackgroundColor3 = Color3.new(0.2,0.2,0.2)
+giveButton.Text = "Get Move"
+giveButton.TextColor3 = Color3.new(1,1,1)
+giveButton.Font = Enum.Font.SourceSansBold
+giveButton.TextScaled = true
+giveButton.Parent = mainFrame
 
-local btnCorner = Instance.new("UICorner")
-btnCorner.CornerRadius = UDim.new(0, 10)
-btnCorner.Parent = button
+local giveCorner = Instance.new("UICorner")
+giveCorner.CornerRadius = UDim.new(0,10)
+giveCorner.Parent = giveButton
+
+local namesButton = Instance.new("TextButton")
+namesButton.Size = UDim2.new(0.25,0,0,30)
+namesButton.Position = UDim2.new(0.7,0,0,135)
+namesButton.BackgroundColor3 = Color3.new(0.3,0.3,0.3)
+namesButton.Text = "Names"
+namesButton.TextColor3 = Color3.new(1,1,1)
+namesButton.Font = Enum.Font.SourceSansBold
+namesButton.TextScaled = true
+namesButton.Parent = mainFrame
+
+local namesCorner = Instance.new("UICorner")
+namesCorner.CornerRadius = UDim.new(0,10)
+namesCorner.Parent = namesButton
 
 
-local warning = Instance.new("TextLabel")
-warning.Size = UDim2.new(1, 0, 0, 40)
-warning.Position = UDim2.new(0, 0, 1, 5)
-warning.BackgroundTransparency = 1
-warning.Text = "Warning:\nDon't type in skill names that don't exist,\nit will just make your inventory messy"
-warning.TextColor3 = Color3.new(1, 0, 0)
-warning.Font = Enum.Font.SourceSansBold
-warning.TextScaled = true
-warning.TextWrapped = true
-warning.Parent = mainFrame
+local skillBuilderButton = Instance.new("TextButton")
+skillBuilderButton.Size = UDim2.new(1,-10,0,35)
+skillBuilderButton.Position = UDim2.new(0,5,0,175)
+skillBuilderButton.BackgroundColor3 = Color3.fromRGB(180,150,0)
+skillBuilderButton.Text = "Skill Builder"
+skillBuilderButton.TextColor3 = Color3.new(1,1,1)
+skillBuilderButton.Font = Enum.Font.SourceSansBold
+skillBuilderButton.TextScaled = true
+skillBuilderButton.Parent = mainFrame
+
+local skillBuilderCorner = Instance.new("UICorner")
+skillBuilderCorner.CornerRadius = UDim.new(0,12)
+skillBuilderCorner.Parent = skillBuilderButton
 
 
-button.MouseButton1Click:Connect(function()
-	local skillName = textBox.Text
-	if skillName == "" then return end
+local listFrame = Instance.new("Frame")
+listFrame.Size = UDim2.new(1,-20,0,120)
+listFrame.Position = UDim2.new(0,10,1,-125)
+listFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+listFrame.Visible = false
+listFrame.Parent = mainFrame
 
-	
-	if player.Backpack:FindFirstChild(skillName) or player.Character:FindFirstChild(skillName) then
-		textBox.TextColor3 = Color3.new(1, 0, 0)
-		textBox.Text = "You already have " .. skillName
-		return
-	end
+local listCorner = Instance.new("UICorner")
+listCorner.CornerRadius = UDim.new(0,12)
+listCorner.Parent = listFrame
 
-	
-	if skillName == "DismantleDomain" then
-		local domainTool = Instance.new("Tool")
-		domainTool.Name = "DismantleDomain"
-		domainTool.RequiresHandle = false
-		domainTool.CanBeDropped = false
-		domainTool.Parent = player.Backpack
+local scroll = Instance.new("ScrollingFrame")
+scroll.Size = UDim2.new(1,-10,1,-10)
+scroll.Position = UDim2.new(0,5,0,5)
+scroll.ScrollBarThickness = 6
+scroll.ScrollBarImageTransparency = 0
+scroll.BackgroundTransparency = 1
+scroll.CanvasSize = UDim2.new(0,0,0,0)
+scroll.Parent = listFrame
 
-		domainTool.Activated:Connect(function()
-			local args = {
-				{ Key = "SukunaDomain", Function = "Active" }
-			}
-			ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ServerRemote"):FireServer(unpack(args))
-		end)
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0,5)
+layout.Parent = scroll
 
-		textBox.TextColor3 = Color3.new(0, 0, 0)
-		textBox.Text = "Sukuna's Domain Added"
-		return
-	end
 
-	
-	if string.find(skillName, "Domain") then
-		textBox.TextColor3 = Color3.new(1, 0, 0)
-		textBox.Text = "Only Sukuna's Domain works!"
-		return
-	end
+local validSkills = {}
 
-	
-	local skillEvent = ReplicatedStorage:WaitForChild("Events"):FindFirstChild("Skill")
-	if skillEvent then
-		local skillTool = Instance.new("Tool")
-		skillTool.Name = skillName
-		skillTool.RequiresHandle = false
-		skillTool.CanBeDropped = false
-		skillTool.Parent = player.Backpack
+local function collectSkills(folder)
+    for _, obj in ipairs(folder:GetChildren()) do
+        validSkills[obj.Name] = true
+    end
+end
 
-		skillTool.Activated:Connect(function()
-			local args = {"Fist", skillName}
-			skillEvent:FireServer(unpack(args))
-		end)
+if ReplicatedStorage:FindFirstChild("Skills") then
+    collectSkills(ReplicatedStorage.Skills)
+end
+if ReplicatedStorage:FindFirstChild("Storage") and ReplicatedStorage.Storage:FindFirstChild("TesterMove") then
+    collectSkills(ReplicatedStorage.Storage.TesterMove)
+end
 
-		textBox.TextColor3 = Color3.new(0, 0, 0)
-		textBox.Text = skillName .. " added!"
-	else
-		textBox.TextColor3 = Color3.new(1, 0, 0)
-		textBox.Text = "Move doesn't exist"
-	end
+
+for name in pairs(validSkills) do
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1,-6,0,25)
+    btn.Text = name
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextScaled = true
+    btn.BackgroundColor3 = Color3.fromRGB(40,40,40)
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Parent = scroll
+
+    btn.MouseButton1Click:Connect(function()
+        textBox.TextColor3 = Color3.new(0,0,0)
+        textBox.Text = name
+        listFrame.Visible = false
+    end)
+end
+
+layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    scroll.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y+5)
+end)
+
+
+namesButton.MouseButton1Click:Connect(function()
+    listFrame.Visible = not listFrame.Visible
+end)
+
+giveButton.MouseButton1Click:Connect(function()
+    local skillName = textBox.Text
+    if not validSkills[skillName] then
+        textBox.TextColor3 = Color3.new(1,0,0)
+        textBox.Text = "Move doesn't exist"
+        return
+    end
+    if player.Backpack:FindFirstChild(skillName) or player.Character:FindFirstChild(skillName) then
+        textBox.TextColor3 = Color3.new(1,0,0)
+        textBox.Text = "You already have it"
+        return
+    end
+    local tool = Instance.new("Tool")
+    tool.Name = skillName
+    tool.RequiresHandle = false
+    tool.CanBeDropped = false
+    tool.Parent = player.Backpack
+    tool.Activated:Connect(function()
+        ReplicatedStorage.Events.Skill:FireServer("Fist", skillName)
+    end)
+    textBox.TextColor3 = Color3.new(0,0,0)
+    textBox.Text = skillName.." added"
 end)
 
 
 moveGiver.Equipped:Connect(function()
-	screenGui.Parent = player:WaitForChild("PlayerGui")
+    screenGui.Parent = player.PlayerGui
+    mainFrame.Visible = true
+end)
+moveGiver.Unequipped:Connect(function()
+    mainFrame.Visible = false
+    listFrame.Visible = false
+end)
+
+
+local builderGui = Instance.new("Frame")
+builderGui.Size = UDim2.new(0,400,0,340)
+builderGui.Position = UDim2.new(0.5,-200,0.40,-170)
+builderGui.BackgroundColor3 = Color3.fromRGB(30,30,30)
+builderGui.Visible = false
+builderGui.Parent = screenGui
+
+local builderCorner = Instance.new("UICorner")
+builderCorner.CornerRadius = UDim.new(0,20)
+builderCorner.Parent = builderGui
+
+
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0,30,0,30)
+closeButton.Position = UDim2.new(1,-35,0,5)
+closeButton.Text = "X"
+closeButton.Font = Enum.Font.SourceSansBold
+closeButton.TextColor3 = Color3.new(1,1,1)
+closeButton.BackgroundColor3 = Color3.fromRGB(200,0,0)
+closeButton.Parent = builderGui
+closeButton.MouseButton1Click:Connect(function()
+	builderGui.Visible = false
 	mainFrame.Visible = true
 end)
 
 
-moveGiver.Unequipped:Connect(function()
+local leftFrame = Instance.new("Frame")
+leftFrame.Size = UDim2.new(0,150,1,-10)
+leftFrame.Position = UDim2.new(0,5,0,5)
+leftFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
+leftFrame.Parent = builderGui
+Instance.new("UICorner", leftFrame).CornerRadius = UDim.new(0,10)
+
+
+local rightFrame = Instance.new("Frame")
+rightFrame.Size = UDim2.new(1,-160,1,-90)
+rightFrame.Position = UDim2.new(0,155,0,5)
+rightFrame.BackgroundColor3 = Color3.fromRGB(50,50,50)
+rightFrame.Parent = builderGui
+Instance.new("UICorner", rightFrame).CornerRadius = UDim.new(0,10)
+
+
+local rightScroll = Instance.new("ScrollingFrame")
+rightScroll.Size = UDim2.new(1,-10,1,-10)
+rightScroll.Position = UDim2.new(0,5,0,5)
+rightScroll.ScrollBarThickness = 6
+rightScroll.BackgroundTransparency = 1
+rightScroll.Active = true
+rightScroll.Parent = rightFrame
+
+local rightLayout = Instance.new("UIListLayout")
+rightLayout.Padding = UDim.new(0,5)
+rightLayout.Parent = rightScroll
+
+
+local skillSequence = {}
+
+
+local function refreshTimeline()
+	for _,v in ipairs(rightScroll:GetChildren()) do
+		if v:IsA("Frame") then v:Destroy() end
+	end
+
+	for i,entry in ipairs(skillSequence) do
+		local row = Instance.new("Frame")
+		row.Size = UDim2.new(1,-10,0,25)
+		row.BackgroundTransparency = 1
+		row.Parent = rightScroll
+
+		local label = Instance.new("TextLabel")
+		label.Size = UDim2.new(0.6,0,1,0)
+		label.BackgroundTransparency = 1
+		label.Font = Enum.Font.SourceSansBold
+		label.TextScaled = true
+		label.TextColor3 = entry.Type=="Wait" and Color3.fromRGB(255,255,0) or Color3.new(1,1,1)
+		label.Text = entry.Type=="Wait" and ("Wait "..entry.Time) or entry.Name
+		label.Parent = row
+
+		local function makeBtn(text,x,callback)
+			local b = Instance.new("TextButton")
+			b.Size = UDim2.new(0.1,0,1,0)
+			b.Position = UDim2.new(x,0,0,0)
+			b.Text = text
+			b.Font = Enum.Font.SourceSansBold
+			b.TextScaled = true
+			b.BackgroundTransparency = 0.4
+			b.Parent = row
+			b.MouseButton1Click:Connect(callback)
+		end
+
+		makeBtn("X",0.6,function()
+			table.remove(skillSequence,i)
+			refreshTimeline()
+		end)
+		makeBtn("↑",0.7,function()
+			if i>1 then
+				skillSequence[i],skillSequence[i-1] = skillSequence[i-1],skillSequence[i]
+				refreshTimeline()
+			end
+		end)
+		makeBtn("↓",0.8,function()
+			if i<#skillSequence then
+				skillSequence[i],skillSequence[i+1] = skillSequence[i+1],skillSequence[i]
+				refreshTimeline()
+			end
+		end)
+	end
+
+	rightScroll.CanvasSize = UDim2.new(0,0,0,rightLayout.AbsoluteContentSize.Y+5)
+end
+
+
+local skillButton = Instance.new("TextButton")
+skillButton.Size = UDim2.new(1,-10,0,40)
+skillButton.Position = UDim2.new(0,5,0,5)
+skillButton.Text = "SKILL"
+skillButton.Font = Enum.Font.SourceSansBold
+skillButton.TextScaled = true
+skillButton.BackgroundColor3 = Color3.fromRGB(100,100,200)
+skillButton.Parent = leftFrame
+Instance.new("UICorner", skillButton).CornerRadius = UDim.new(0,10)
+
+local waitButton = Instance.new("TextButton")
+waitButton.Size = UDim2.new(1,-10,0,40)
+waitButton.Position = UDim2.new(0,5,0,50)
+waitButton.Text = "WAIT"
+waitButton.Font = Enum.Font.SourceSansBold
+waitButton.TextScaled = true
+waitButton.BackgroundColor3 = Color3.fromRGB(200,100,100)
+waitButton.Parent = leftFrame
+Instance.new("UICorner", waitButton).CornerRadius = UDim.new(0,10)
+
+local waitInput = Instance.new("TextBox")
+waitInput.Size = UDim2.new(1,-10,0,25)
+waitInput.Position = UDim2.new(0,5,0,95)
+waitInput.PlaceholderText = "Wait time (sec)"
+waitInput.TextScaled = true
+waitInput.BackgroundColor3 = Color3.fromRGB(60,60,60)
+waitInput.TextColor3 = Color3.new(1,1,1)
+waitInput.Parent = leftFrame
+Instance.new("UICorner", waitInput).CornerRadius = UDim.new(0,8)
+
+
+local skillListFrame = Instance.new("ScrollingFrame")
+skillListFrame.Size = UDim2.new(1,-10,1,-130)
+skillListFrame.Position = UDim2.new(0,5,0,130)
+skillListFrame.Visible = false
+skillListFrame.ScrollBarThickness = 6
+skillListFrame.BackgroundColor3 = Color3.fromRGB(60,60,60)
+skillListFrame.Active = true
+skillListFrame.Parent = leftFrame
+
+local skillLayout = Instance.new("UIListLayout")
+skillLayout.Padding = UDim.new(0,5)
+skillLayout.Parent = skillListFrame
+
+
+skillLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	skillListFrame.CanvasSize = UDim2.new(0,0,0,skillLayout.AbsoluteContentSize.Y+5)
+end)
+
+skillButton.MouseButton1Click:Connect(function()
+	skillListFrame.Visible = not skillListFrame.Visible
+end)
+
+
+for name in pairs(validSkills) do
+	local btn = Instance.new("TextButton")
+	btn.Size = UDim2.new(1,-6,0,25)
+	btn.Text = name
+	btn.Font = Enum.Font.SourceSansBold
+	btn.TextScaled = true
+	btn.BackgroundColor3 = Color3.fromRGB(100,100,100)
+	btn.TextColor3 = Color3.new(1,1,1)
+	btn.Parent = skillListFrame
+
+	btn.MouseButton1Click:Connect(function()
+		table.insert(skillSequence,{Type="Skill",Name=name})
+		refreshTimeline()
+	end)
+end
+
+
+waitButton.MouseButton1Click:Connect(function()
+	local t = tonumber(waitInput.Text)
+	if not t or t <= 0 then t = 0.5 end
+	table.insert(skillSequence, {Type = "Wait", Time = t})
+	refreshTimeline()
+	waitInput.Text = ""
+end)
+
+
+local skillNameBox = Instance.new("TextBox")
+skillNameBox.Size = UDim2.new(1,-20,0,30)
+skillNameBox.Position = UDim2.new(0,10,1,-45)
+skillNameBox.PlaceholderText = "Custom Skill Name"
+skillNameBox.TextScaled = true
+skillNameBox.BackgroundColor3 = Color3.fromRGB(70,70,70)
+skillNameBox.TextColor3 = Color3.new(1,1,1)
+skillNameBox.Parent = builderGui
+Instance.new("UICorner", skillNameBox).CornerRadius = UDim.new(0,10)
+
+
+local getSkillButton = Instance.new("TextButton")
+getSkillButton.Size = UDim2.new(1,-20,0,30)
+getSkillButton.Position = UDim2.new(0,10,1,-10)
+getSkillButton.Text = "Get Skill"
+getSkillButton.Font = Enum.Font.SourceSansBold
+getSkillButton.TextScaled = true
+getSkillButton.BackgroundColor3 = Color3.fromRGB(180,150,0)
+getSkillButton.Parent = builderGui
+Instance.new("UICorner", getSkillButton).CornerRadius = UDim.new(0,10)
+
+getSkillButton.MouseButton1Click:Connect(function()
+	local name = skillNameBox.Text ~= "" and skillNameBox.Text or "CustomSkill"
+	if player.Backpack:FindFirstChild(name) then return end
+
+	local sequenceCopy = table.clone(skillSequence)
+	local tool = Instance.new("Tool")
+	tool.Name = name
+	tool.RequiresHandle = false
+	tool.CanBeDropped = false
+	tool.Parent = player.Backpack
+
+	local isRunning = false
+	tool.Activated:Connect(function()
+		if isRunning then return end
+		isRunning = true
+		for _,entry in ipairs(sequenceCopy) do
+			if entry.Type == "Skill" then
+				ReplicatedStorage.Events.Skill:FireServer("Fist", entry.Name)
+			elseif entry.Type == "Wait" then
+				task.wait(entry.Time)
+			end
+		end
+		isRunning = false
+	end)
+
+	skillSequence = {}
+	refreshTimeline()
+	skillNameBox.Text = ""
+end)
+
+
+skillBuilderButton.MouseButton1Click:Connect(function()
 	mainFrame.Visible = false
+	builderGui.Visible = true
 end)
